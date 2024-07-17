@@ -1,25 +1,16 @@
 import express from 'express';
-import auth from '../../middlewares/auth';
 import { ProductController } from './product.controller';
 
 const router = express.Router();
 
-router.post('/', auth('ADMIN', 'SUPER_ADMIN'), ProductController.createProduct);
+router.post('/', ProductController.createProduct);
 
 router.get('/', ProductController.getAllProduct);
 
 router.get('/:id', ProductController.getSingleProduct);
 
-router.delete(
-  '/:id',
-  auth('ADMIN', 'SUPER_ADMIN'),
-  ProductController.deleteProduct,
-);
+router.delete('/:id', ProductController.deleteProduct);
 
-router.put(
-  '/:id',
-  auth('ADMIN', 'SUPER_ADMIN'),
-  ProductController.updateProduct,
-);
+router.put('/:id', ProductController.updateProduct);
 
 export const ProductRouter = router;

@@ -1,3 +1,4 @@
+import QueryBuilder from '../../builder/QueryBuilder';
 import TProduct from './product.interface';
 import { ProductModel } from './product.model';
 
@@ -7,8 +8,19 @@ const createProductIntoDB = async (payload: TProduct) => {
   return result;
 };
 
-const getAllProductFromDB = async () => {
-  const result = await ProductModel.find({ isDeleted: false });
+const getAllProductFromDB = async (query: Record<string, unknown>) => {
+  const productQuery = new QueryBuilder(
+    ProductModel.find(),
+    // .populate('preRequisiteCourses.course'),
+    query,
+  )
+    .search(['name', 'category', 'price'])
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const result = await productQuery.modelQuery;
 
   return result;
 };
