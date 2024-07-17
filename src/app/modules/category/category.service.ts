@@ -1,5 +1,3 @@
-import { Category, PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
 
 const createCategoryIntoDB = async (payload: Category) => {
