@@ -10,12 +10,6 @@ router.get('/', ProductController.getAllProduct);
 
 router.get('/:id', ProductController.getSingleProduct);
 
-router.get(
-  '/userProducts/:userId',
-  auth('ADMIN', 'SUPER_ADMIN'),
-  ProductController.getUsersProduct,
-);
-
 router.delete(
   '/:id',
   auth('ADMIN', 'SUPER_ADMIN'),

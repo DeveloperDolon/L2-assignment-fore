@@ -25,6 +25,6 @@ const categorySchema = new Schema<TCategory>(
 );
 
 export const CategoryModel = mongoose.model<TCategory>(
-  'Categories',
+  'Category',
   categorySchema,
 );
