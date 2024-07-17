@@ -1,12 +1,10 @@
-import { PrismaClient } from '@prisma/client';
 import TUser, { TLoginUser } from './user.interface';
 import bcrypt from 'bcrypt';
 import config from '../../config';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
 import { createToken } from './user.utils';
-
-const prisma = new PrismaClient();
+import { UserModel } from './user.model';
 
 const createUserIntoDB = async (payload: TUser) => {
   const myPlaintextPassword = payload?.password;
@@ -15,17 +13,13 @@ const createUserIntoDB = async (payload: TUser) => {
     Number(config.bcrypt_salt_rounds as string),
   );
 
-  const result = await prisma.user.create({
-    data: payload,
-  });
+  const result = await UserModel.create(payload);
 
   return result;
 };
 
 const loginUserFromDB = async (payload: TLoginUser) => {
-  const user = await prisma.user.findUnique({
-    where: { email: payload?.email },
-  });
+  const user = await UserModel.findOne({ email: payload?.email });
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'Your is not exist!');
@@ -65,35 +59,25 @@ const loginUserFromDB = async (payload: TLoginUser) => {
 };
 
 const getAllUsersFromDB = async () => {
-  const result = await prisma.user.findMany({
-    where: { isDelete: false },
-  });
+  const result = await UserModel.find({ isDelete: false });
 
   return result;
 };
 
 const updateUserIntoDB = async (payload: Partial<TUser>, id: string) => {
-  const result = await prisma.user.update({
-    where: { id: id },
-    data: payload,
-  });
+  const result = await UserModel.findByIdAndUpdate(id, payload);
 
   return result;
 };
 
 const getSingleUserFromDB = async (id: string) => {
-  const result = await prisma.user.findUnique({
-    where: { id: id },
-  });
+  const result = await UserModel.findById(id);
 
   return result;
 };
 
 const deleteUserIntoDB = async (id: string) => {
-  const result = await prisma.user.update({
-    where: { id: id },
-    data: { isDelete: true },
-  });
+  const result = await UserModel.findByIdAndUpdate(id, { isDelete: true });
 
   return result;
 };
