@@ -1,46 +1,32 @@
-import { Order, PrismaClient } from '@prisma/client';
+import TOrder from './order.interface';
+import { OrderModel } from './order.model';
 
-const prisma = new PrismaClient();
-
-const createOrderIntoDB = async (payload: Order) => {
-  const result = await prisma.order.create({
-    data: payload,
-  });
+const createOrderIntoDB = async (payload: TOrder) => {
+  const result = await OrderModel.create(payload);
 
   return result;
 };
 
 const getAllOrdersFromDB = async () => {
-  const result = await prisma.order.findMany();
+  const result = await OrderModel.find();
 
   return result;
 };
 
 const getUserOrderFromDB = async (userId: string) => {
-  const result = await prisma.order.findMany({
-    where: { userId },
-  });
+  const result = await OrderModel.find({ user: userId });
 
   return result;
 };
 
 const getSingleOrderFromDB = async (id: string) => {
-  const result = await prisma.order.findUnique({
-    where: { id },
-  });
-
-  return result;
-};
-
-const deleteOrderIntoDB = async (id: string) => {
-  const result = await prisma.order.update({
-    where: { id },
-    data: { isDeleted: true },
-  });
-
+  const result = await OrderModel.findById(id);
   return result;
 };
 
 export const OrderServices = {
   createOrderIntoDB,
+  getAllOrdersFromDB,
+  getUserOrderFromDB,
+  getSingleOrderFromDB,
 };

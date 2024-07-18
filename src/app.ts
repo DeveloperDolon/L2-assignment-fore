@@ -15,8 +15,6 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/public', express.static('./public'));
-
 // application routes
 app.use('/api/v1', router);
 
