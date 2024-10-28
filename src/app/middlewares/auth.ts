@@ -4,11 +4,9 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../config';
 import AppError from '../errors/AppError';
 import catchAsync from '../utils/catchAsync';
-import { PrismaClient } from '@prisma/client';
+import { UserModel } from '../modules/user/user.model';
 
 type TUserRole = 'SUPER_ADMIN' | 'ADMIN' | 'USER';
-
-const prisma = new PrismaClient();
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -28,9 +26,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     const { role, userId } = decoded;
 
     // checking if the user is exist
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-    });
+    const user = await UserModel.findById(userId);
 
     if (!user) {
       throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
