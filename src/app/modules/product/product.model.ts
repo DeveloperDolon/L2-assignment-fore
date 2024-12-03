@@ -21,10 +21,10 @@ const productSchema = new Schema<TProduct>(
       required: true,
     },
     slider_images: {
-      multiTypeField: [String, File],
+      type: String,
       default:
         'https://t3.ftcdn.net/jpg/07/48/61/48/240_F_748614846_odYf50Eo0Zjx9D0SXOBnD0lwg0zSjLhQ.jpg',
-    },
+    },    
     is_deleted: {
       type: Boolean,
       default: false,
