@@ -3,7 +3,7 @@ import TProduct from './product.interface';
 
 const productSchema = new Schema<TProduct>(
   {
-    name: {
+    product_name: {
       type: String,
       required: true,
     },
@@ -11,30 +11,49 @@ const productSchema = new Schema<TProduct>(
       type: String,
       required: true,
     },
-    category: [
-      {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'Category',
-      },
-    ],
-    price: {
+    category_id: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Category',
+    },
+    actual_price: {
       type: Number,
       required: true,
     },
-    image: {
-      type: String,
+    slider_images: {
+      multiTypeField: [String, File],
       default:
         'https://t3.ftcdn.net/jpg/07/48/61/48/240_F_748614846_odYf50Eo0Zjx9D0SXOBnD0lwg0zSjLhQ.jpg',
     },
-    isDeleted: {
+    is_deleted: {
       type: Boolean,
       default: false,
     },
-    stock: {
-      type: Number,
+    in_stock: {
+      type: Boolean,
       required: true,
     },
+    discount: {
+      type: Number,
+      required: false
+    },
+    quantity: {
+      type: Number,
+      required: true
+    },
+    warranty: {
+      type: String,
+      required: false
+    },
+    policies: {
+      type: String,
+      required: false
+    },
+    brand_id: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Brand',
+    }
   },
   {
     timestamps: true,
