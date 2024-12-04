@@ -31,7 +31,7 @@ const productSchema = new Schema<TProduct>(
     },
     in_stock: {
       type: Boolean,
-      required: true,
+      default: true,
     },
     discount: {
       type: Number,
