@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 export default interface TProduct {
   product_name: string;
   actual_price: number;
-  slider_images: string;
+  images: string;
   discount: number;
   description: string;
   category_id: Types.ObjectId;
