@@ -3,7 +3,6 @@ import TProduct from './product.interface';
 import { ProductModel } from './product.model';
 
 const createProductIntoDB = async (payload: TProduct) => {
-  console.log(payload);
   const result = await ProductModel.create(payload);
 
   return result;
