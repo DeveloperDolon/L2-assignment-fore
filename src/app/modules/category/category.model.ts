@@ -7,13 +7,6 @@ const categorySchema = new Schema<TCategory>(
       type: String,
       required: true,
     },
-    products: [
-      {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'Products',
-      },
-    ],
     isDelete: {
       type: Boolean,
       default: false,
