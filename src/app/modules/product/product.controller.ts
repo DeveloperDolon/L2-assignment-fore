@@ -2,10 +2,24 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { ProductServices } from './product.service';
+import cloudinary from '../../utils/cloudinary';
+import { UploadApiResponse } from 'cloudinary';
 
 const createProduct = catchAsync(async (req, res) => {
-  console.log(req.body);
-  return;
+  if(req.file) {
+    await cloudinary.uploader.upload(req.file?.path as string, function(err: Error | undefined, result: UploadApiResponse | undefined) {
+      if(err) {
+        sendResponse(res, {
+          statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+          success: false,
+          message: err.message,
+          data: err
+        });
+      }
+      req.body.images = result?.secure_url;
+    });
+  }
+
   const result = await ProductServices.createProductIntoDB(req.body);
 
   sendResponse(res, {
