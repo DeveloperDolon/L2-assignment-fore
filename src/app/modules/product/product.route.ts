@@ -1,9 +1,11 @@
 import express from 'express';
 import { ProductController } from './product.controller';
+import multer, { Multer } from 'multer';
 
+const upload: Multer = multer();
 const router = express.Router();
 
-router.post('/', ProductController.createProduct);
+router.post('/', upload.any(), ProductController.createProduct);
 
 router.get('/', ProductController.getAllProduct);
 
