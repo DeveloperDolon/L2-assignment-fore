@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import TProduct from './product.interface';
+import { NextFunction } from 'express';
 
 const productSchema = new Schema<TProduct>(
   {
@@ -24,7 +25,7 @@ const productSchema = new Schema<TProduct>(
       type: Schema.Types.Mixed,
       default:
         'https://t3.ftcdn.net/jpg/07/48/61/48/240_F_748614846_odYf50Eo0Zjx9D0SXOBnD0lwg0zSjLhQ.jpg',
-    },    
+    },
     is_deleted: {
       type: Boolean,
       default: false,
@@ -35,25 +36,24 @@ const productSchema = new Schema<TProduct>(
     },
     discount: {
       type: Number,
-      required: false
+      required: false,
     },
     quantity: {
       type: Number,
-      required: true
+      required: true,
     },
     warranty: {
       type: String,
-      required: false
+      required: false,
     },
     policies: {
       type: String,
-      required: false
+      required: false,
     },
-    brand_id: {
-      type: Schema.Types.ObjectId,
+    brand: {
+      type: String,
       required: true,
-      ref: 'Brand',
-    }
+    },
   },
   {
     timestamps: true,

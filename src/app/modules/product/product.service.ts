@@ -1,8 +1,12 @@
+import mongoose from 'mongoose';
 import QueryBuilder from '../../builder/QueryBuilder';
 import TProduct from './product.interface';
 import { ProductModel } from './product.model';
 
 const createProductIntoDB = async (payload: TProduct) => {
+  payload.category_id = new mongoose.Types.ObjectId(
+    String(payload.category_id).trim().replace(/"/g, ''),
+  );
 
   const result = await ProductModel.create(payload);
 

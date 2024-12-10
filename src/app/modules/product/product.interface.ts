@@ -9,7 +9,7 @@ export default interface TProduct {
   category_id: Types.ObjectId;
   in_stock: boolean;
   quantity: number;
-  brand_id: Types.ObjectId;
+  brand: string;
   warranty: string;
   policies: string;
   is_deleted: boolean;
