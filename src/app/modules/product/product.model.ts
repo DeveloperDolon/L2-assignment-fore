@@ -1,6 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
 import TProduct from './product.interface';
-import { NextFunction } from 'express';
 
 const productSchema = new Schema<TProduct>(
   {

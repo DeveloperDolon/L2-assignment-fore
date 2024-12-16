@@ -6,6 +6,7 @@ import cloudinary from '../../utils/cloudinary';
 import { UploadApiResponse } from 'cloudinary';
 
 const createProduct = catchAsync(async (req, res) => {
+
   if(req.file) {
     await cloudinary.uploader.upload(req.file?.path as string, function(err: Error | undefined, result: UploadApiResponse | undefined) {
       if(err) {
