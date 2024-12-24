@@ -6,19 +6,21 @@ import cloudinary from '../../utils/cloudinary';
 import { UploadApiResponse } from 'cloudinary';
 
 const createProduct = catchAsync(async (req, res) => {
-
-  if(req.file) {
-    await cloudinary.uploader.upload(req.file?.path as string, function(err: Error | undefined, result: UploadApiResponse | undefined) {
-      if(err) {
-        sendResponse(res, {
-          statusCode: httpStatus.INTERNAL_SERVER_ERROR,
-          success: false,
-          message: err.message,
-          data: err
-        });
-      }
-      req.body.images = result?.secure_url;
-    });
+  if (req.file) {
+    await cloudinary.uploader.upload(
+      req.file?.path as string,
+      function (err: Error | undefined, result: UploadApiResponse | undefined) {
+        if (err) {
+          sendResponse(res, {
+            statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+            success: false,
+            message: err.message,
+            data: err,
+          });
+        }
+        req.body.images = result?.secure_url;
+      },
+    );
   }
 
   const result = await ProductServices.createProductIntoDB(req.body);

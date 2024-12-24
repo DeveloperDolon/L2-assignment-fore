@@ -19,7 +19,7 @@ const getAllProductFromDB = async (query: Record<string, unknown>) => {
     // .populate('preRequisiteCourses.course'),
     query,
   )
-    .search(['name', 'category', 'price'])
+    .search(['product_name'])
     .filter()
     .sort()
     .paginate()
