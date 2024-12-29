@@ -31,7 +31,7 @@ const getAllProductFromDB = async (query: Record<string, unknown>) => {
 };
 
 const getSingleProductFromDB = async (id: string) => {
-  const result = await ProductModel.findById(id);
+  const result = await ProductModel.findById(id).populate('category_id');
 
   return result;
 };
