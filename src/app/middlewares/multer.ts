@@ -4,10 +4,12 @@ import multer from 'multer';
 const storage = multer.diskStorage({
   filename: function (
     req: Request,
+    // eslint-disable-next-line no-undef
     file: Express.Multer.File,
-    cb: (error: Error | null, filename) => void,
+    // eslint-disable-next-line no-unused-vars
+    cb: (error: Error | null, filename: string) => void,
   ) {
-    cb(null, file.originalname);
+    return cb(null, file.originalname);
   },
 });
 
